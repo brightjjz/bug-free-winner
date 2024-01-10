@@ -1,170 +1,177 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>切屏动画</title>
-    <meta charset="utf-8" />
-    <style type="text/css">
-      html,body{
-	    width:100%;
-      	height:100%;
-      	margin:0px;
-      	overflow:hidden;
-      }
-	  .top{
-        background-color:antiquewhite;
-		width:100%;
-		height:6.25%;
-		display:flex;
-		justify-content:center;
-		align-items:center;
+<head>
+<title>雪虎</title>
+<meta charset="utf-8" />
+<style type="text/css">
+	  html,body{
+		background-color: #97C19F;
+		
 	  }
-	  .top h2{
-		  margin: 0;
+      .header{
+        width:1000px;
+        height:100px;
+        line-height:100px;
+        border:1px solid #549688;
+        margin:0px auto;
+        text-align:center;
+		background-color: #7fecad;
+      }
+	  .header img {
+	    position: absolute;
+	    top: 10px;
+		left: 0;
 	  }
-      #mainDiv{
-      	position:relative;
-      	left:0px;
-      	top:0px;
-      	
-	    width:100%;
-      	height:100%;
-      	
-      	transition:all 1s ease;
+      .main{
+        width:1000px;
+        margin:20px auto;
+        height:500px;
       }
-      #mainDiv div{
-	    width:100%;
-      	height:100%;
-      	
-      	background-repeat:no-repeat;
-      	background-position:center;
-      	background-size:cover;
+      .content{
+        width:1000px;
+        height:500px;
+        line-height:500px;
+        text-align:center;
+        border:1px solid #549688;
+        float:none;
+		flex: 1;
+		overflow: hidden;
+		position: relative;
       }
-      .page1{
-	    background-image:url("js/1.png");
-      }
-      .page2{
-	    background-image:url("js/2.png");
-      }
-      .page3{
-	    background-image:url("js/3.webp");
-      }
-      .page4{
-	    background-image:url("js/4.webp");
-      }
-      .btn_list{
+	  #mainDiv{
+	  	position:relative;
+	  	left:0px;
+	  	top:0px;
+	  	
+	    width:1000px;
+	  	height:400px;
+	  	
+	  	transition:all 1s ease;
+	  }
+	  #mainDiv div{
+	    width:1000px;
+	  	height:500px;
+	  	
+	  	background-repeat:no-repeat;
+	  	background-position:center;
+	  	background-size:cover;
+	  }
+	  .page1{
+	    background-image:url("js/111(1).png");
+		background-size: cover;
+	  }
+	  .page2{
+	    background-image:url("js/222(1)(1).png");
+		background-size: cover;
+	  }
+	  .page3{
+	    background-image:url("js/huhu3(11).png");
+		background-size: cover;
+	  }
+	  .page4{
+	    background-image:url("js/screenshot20240110 (2).png");
+		background-size: cover;
+	  }
+	  .btn_list{
 	    position:fixed;
-      	top:30%;
-      	right:50px;
-      }
-      ul{
-	    list-style-type:none;
-      }
-      li{
-	    width:20px;
-      	height:20px;
-      	margin-top:10px;
-      	border-radius:20px;
-      	background-color:#3D3D3D;
-      	cursor:pointer;
-      }
-      #li0{
-	    background-color:#10508D;
-      }
-      a{
-      	position:absolute;
-      	bottom:2px;
-      	left:10%;
-      	transform: translateX(-50%);
-      }
-	  a img{
-	    opacity:1;
-	    transition: opacity 0.3s ease;
+	  	top:30%;
+	  	right:50px;
 	  }
-      a:hover{
-	    color:#FF0000;
-      	text-decoration:underline;
+	  ul{
+	    list-style-type:none;
+	  }
+	  li{
+	    width:20px;
+	  	height:20px;
+	  	margin-top:10px;
+	  	border-bottom-left-radius:20px;
+	  	background-color:#48c0a3;
+	  	cursor:pointer;
+	  }
+	  #li0{
+	    background-color:#40de5a;
+	  }
+	 #image{
+		width: 1000px;
+		height: 500px;
+	  }
+      .footer{
+        width:1000px;
+        height:50px;
+        line-height:50px;
+        text-align:center;
+        border:1px solid #549688;
+        margin:0px auto;
       }
-      a:hover img{
-	    opacity:0.5;
-      }
-      .link{
-        position:absolute;
-        bottom:2px;
-        left:10%;
-        transform: translateX(-50%);
-      }
+	  .footer img{
+		  opacity: 0.6;
+	  }
     </style>
-    <script type="text/javascript">
-      var index = 0;//当前显示第几屏。0代表第1屏
-      
-      window.onload = function(){
-    	  
-    	  //为li添加鼠标点击事件
-    	  for(var i=0;i<=3;i++){
-    		  document.getElementById("li"+i).onclick = function(){
-    			  
-    			  index = this.id.replace("li","");//通过id获取当前显示第几屏
-    			  
-    			  pageAnimate();
-    		  }
-    	  }
-    	  
-    	  //窗口大小重置
-    	  window.onresize = function(){
-    		  //暂时去掉mainDiv的过渡动画
-    		  document.getElementById("mainDiv").style.transition = "all 0s ease";
-    		  
-    		  pageAnimate();//切屏
-    		  
-    		  //重新加上mainDiv的过渡动画
-    		  window.setTimeout(function(){
-				  document.getElementById("mainDiv").style.transition = "all 1s ease";
-			  },10);
-    	  }
-      }
-      //设置显示哪一屏，并设置右浮动按扭显示样式
-      function pageAnimate(){
-    	  
-    	  var offsetHeight = document.body.offsetHeight;
-    	  document.getElementById("mainDiv").style.top = -(offsetHeight * index)+"px";
-		  
-    	  //设置右则浮动按扭的显示样式
-		  for(var i=0;i<=3;i++){
-			  document.getElementById("li"+i).style.backgroundColor = "#88ada6";
-		  }
-		  document.getElementById("li"+index).style.backgroundColor = "#c0ebd7";
-		  if(index === 3){
-		                document.getElementById("link").style.display = "block";
-		            } else {
-		                document.getElementById("link").style.display = "none";
-		            }
-      }
-    </script>
-  </head>
-  <body>
-    <div class="top">
-		<h2>连环画</h2>
-	</div>
-	
-    <div id="mainDiv">
-      <div class="page1"></div>
-      <div class="page2"></div>
-      <div class="page3"></div>
-      <div class="page4"></div>
-    </div>
+</head>
+<body>    
+<div class="header">
+	<h1>雪虎</h1>
+	<img src="js/5 (2).png" style="width: 95px; height: 95px;"/>
+</div>
     
-    <div class="btn_list">
-      <ul>
-        <li id="li0"></li>
-        <li id="li1"></li>
-        <li id="li2"></li>
-        <li id="li3"></li>
-      </ul>
-    </div>
-	<div>
-		<a href="https://brightjjz.github.io/vigilant-octo-funicular/" 
-			target="blank"><img src="js/箭头分割线.gif" /></a>
+<div class="main">
+<div class="content">
+	<div id="mainDiv">
+	    <div class="page1"></div>
+	    <div class="page2"></div>
+	    <div class="page3"></div>
+	    <div class="page4"></div>
 	</div>
-    
-  </body>
+	<div class="btn_list">
+		<ul id="btnList">
+		    <li id="li0"></li>
+		    <li id="li1"></li>
+		    <li id="li2"></li>
+		    <li id="li3"></li>
+		</ul>
+	</div>
+</div>
+</div>
+   
+<div class="footer">
+	<a href="https://brightjjz.github.io/vigilant-octo-funicular/" target="_blank" title="问卷"><img src="js/箭头分割线.gif" style="width: 1000px; height: 50px;" /></a>
+</div>
+   
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    var index = 0;//当前显示第几屏。0代表第1屏     
+    $(document).ready(function(){   	  
+        // 为li添加鼠标点击事件
+        $("#btnList li").click(function(){ 
+            index = $(this).index(); // 通过索引获取当前显示第几屏              
+            pageAnimate();
+        });      	  
+        // 窗口大小重置
+       /* $(window).resize(function(){
+            // 暂时去掉mainDiv的过渡动画
+            $("#mainDiv").css("transition", "all 0s ease");
+            pageAnimate(); // 切换屏幕
+            // 重新加上mainDiv的过渡动画
+            setTimeout(function(){
+                $("#mainDiv").css("transition", "all 1s ease");
+            }, 10);
+        });*/
+		 $(window).resize(function(){
+		        pageAnimate(); // 切换屏幕
+		    });
+    });
+    // 设置显示哪一屏，并设置右浮动按钮显示样式
+    function pageAnimate(){      	  
+        var offsetHeight = $(window).height();
+       /* $("#mainDiv").css("top", -(offsetHeight * index) + "px");   		  
+        // 设置右则浮动按钮的显示样式*/
+		var top = -(offsetHeight * index); // 计算目标top值
+		
+		    // 使用animate方法实现平滑动画效果
+		    $("#mainDiv").stop().animate({top: top}, 1000);
+        $("#btnList li").css("background-color", "#48c0a3");
+        $("#btnList li:eq(" + index + ")").css("background-color", "#40de5a");
+    }
+</script>  
+</body>
 </html>
